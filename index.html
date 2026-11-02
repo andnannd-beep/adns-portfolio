@@ -1,209 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Archive Buddy 🗂️</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ADN'S Professional Portfolio">
+  <title>ADN'S | Professional Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="site-header">
-    <div class="header-inner">
-      <span class="logo">🗂️ My Archive Buddy</span>
-      <p class="tagline">Your cute, cozy archive manager</p>
-    </div>
+<body>
+  <!-- NAVIGATION -->
+  <header class="navbar">
+    <a href="#home" class="logo">ADN<span>✦</span></a>
+
+    <nav>
+      <a href="#eras">Explore Eras</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <main class="container">
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">A PERSONAL PROFESSIONAL PORTFOLIO</p>
+        <h1>Welcome to<br><em>ADN'S</em></h1>
 
-    <!-- ===== DASHBOARD STATS ===== -->
-    <section class="dashboard" aria-label="Archive statistics">
-      <div class="stat-card" id="stat-total">
-        <span class="stat-icon">📦</span>
-        <span class="stat-number" id="count-total">0</span>
-        <span class="stat-label">Total Archives</span>
+        <p class="hero-description">
+          A collection of my work, learning, and professional journey
+          in archives, libraries, and information management.
+        </p>
+
+        <a href="#eras" class="main-button">Explore the Eras ↘</a>
       </div>
-      <div class="stat-card" id="stat-active">
-        <span class="stat-icon">✅</span>
-        <span class="stat-number" id="count-active">0</span>
-        <span class="stat-label">Active</span>
-      </div>
-      <div class="stat-card" id="stat-inactive">
-        <span class="stat-icon">📭</span>
-        <span class="stat-number" id="count-inactive">0</span>
-        <span class="stat-label">Inactive</span>
-      </div>
-      <div class="stat-card" id="stat-transferred">
-        <span class="stat-icon">📤</span>
-        <span class="stat-number" id="count-transferred">0</span>
-        <span class="stat-label">Transferred</span>
+
+      <div class="hero-art">
+        <div class="vinyl">
+          <div class="vinyl-label">
+            <span>ADN</span>
+            <small>THE COLLECTION</small>
+          </div>
+        </div>
+        <span class="sparkle sparkle-one">✦</span>
+        <span class="sparkle sparkle-two">✧</span>
       </div>
     </section>
 
-    <!-- ===== ADD / EDIT FORM ===== -->
-    <section class="card form-card" aria-label="Archive form">
-      <h2 id="form-title" class="section-title">➕ Add New Archive</h2>
-
-      <!-- Notification banner (hidden by default) -->
-      <div id="form-notification" class="notification hidden" role="alert" aria-live="polite"></div>
-
-      <form id="archive-form" novalidate>
-        <!-- Hidden field stores the ID of the record being edited -->
-        <input type="hidden" id="edit-id" value="" />
-
-        <div class="form-grid">
-          <!-- Archive Number -->
-          <div class="form-group">
-            <label for="archive-number">Archive Number <span class="required">*</span></label>
-            <input
-              type="text"
-              id="archive-number"
-              placeholder="e.g. ARC-2024-001"
-              maxlength="50"
-              autocomplete="off"
-            />
-            <span class="field-error" id="err-archive-number"></span>
-          </div>
-
-          <!-- Document Title -->
-          <div class="form-group">
-            <label for="doc-title">Document Title <span class="required">*</span></label>
-            <input
-              type="text"
-              id="doc-title"
-              placeholder="e.g. Annual Budget Report"
-              maxlength="100"
-              autocomplete="off"
-            />
-            <span class="field-error" id="err-doc-title"></span>
-          </div>
-
-          <!-- Category -->
-          <div class="form-group">
-            <label for="category">Category <span class="required">*</span></label>
-            <select id="category">
-              <option value="">— Select category —</option>
-              <option value="Finance">Finance</option>
-              <option value="HR">HR</option>
-              <option value="Legal">Legal</option>
-              <option value="Operations">Operations</option>
-              <option value="Correspondence">Correspondence</option>
-              <option value="Other">Other</option>
-            </select>
-            <span class="field-error" id="err-category"></span>
-          </div>
-
-          <!-- Document Date -->
-          <div class="form-group">
-            <label for="doc-date">Document Date <span class="required">*</span></label>
-            <input type="date" id="doc-date" />
-            <span class="field-error" id="err-doc-date"></span>
-          </div>
-
-          <!-- Status -->
-          <div class="form-group">
-            <label for="status">Status <span class="required">*</span></label>
-            <select id="status">
-              <option value="">— Select status —</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-              <option value="Transferred">Transferred</option>
-            </select>
-            <span class="field-error" id="err-status"></span>
-          </div>
-        </div>
-
-        <!-- Form Action Buttons -->
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="submit-btn">💾 Save Archive</button>
-          <button type="button" class="btn btn-secondary" id="cancel-btn">✖ Cancel</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- ===== RECORDS TABLE ===== -->
-    <section class="card table-card" aria-label="Archive records">
-      <div class="table-header">
-        <h2 class="section-title">📋 Archive Records</h2>
-
-        <!-- Search and Filters -->
-        <div class="filters">
-          <input
-            type="search"
-            id="search-input"
-            placeholder="🔍 Search by number or title…"
-            aria-label="Search archives"
-            autocomplete="off"
-          />
-          <select id="filter-status" aria-label="Filter by status">
-            <option value="">All Statuses</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Transferred">Transferred</option>
-          </select>
-          <select id="filter-category" aria-label="Filter by category">
-            <option value="">All Categories</option>
-            <option value="Finance">Finance</option>
-            <option value="HR">HR</option>
-            <option value="Legal">Legal</option>
-            <option value="Operations">Operations</option>
-            <option value="Correspondence">Correspondence</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+    <!-- EXPLORE ERAS -->
+    <section class="eras-section" id="eras">
+      <div class="section-heading">
+        <p class="eyebrow">THE COLLECTION</p>
+        <h2>Choose an Era</h2>
+        <p>Each album opens a different chapter of my professional story.</p>
       </div>
 
-      <!-- Result count -->
-      <p class="result-count" id="result-count" aria-live="polite"></p>
+      <div class="album-grid">
+        <a href="#career" class="album-card career">
+          <div class="album-cover">
+            <span class="album-number">01</span>
+            <span class="album-symbol">✦</span>
+            <h3>The Career<br>Era</h3>
+            <p>CV · Experience · Skills</p>
+          </div>
+          <div class="album-footer">
+            <span>THE CAREER ERA</span>
+            <span>OPEN ↗</span>
+          </div>
+        </a>
 
-      <!-- Records Table -->
-      <div class="table-wrapper" role="region" aria-label="Scrollable archive table" tabindex="0">
-        <table id="archive-table" aria-describedby="result-count">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Archive No.</th>
-              <th scope="col">Document Title</th>
-              <th scope="col">Category</th>
-              <th scope="col">Date</th>
-              <th scope="col">Status</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <!-- Rows injected by script.js -->
-          </tbody>
-        </table>
-      </div>
+        <a href="#certificates" class="album-card certified">
+          <div class="album-cover">
+            <span class="album-number">02</span>
+            <span class="album-symbol">✧</span>
+            <h3>The Certified<br>Era</h3>
+            <p>Credentials · Learning</p>
+          </div>
+          <div class="album-footer">
+            <span>THE CERTIFIED ERA</span>
+            <span>OPEN ↗</span>
+          </div>
+        </a>
 
-      <!-- Empty state message -->
-      <div id="empty-state" class="empty-state hidden" aria-live="polite">
-        <span class="empty-icon">🗃️</span>
-        <p>No archives found. Try adjusting your filters or add a new record above!</p>
+        <a href="#portfolio" class="album-card showcase">
+          <div class="album-cover">
+            <span class="album-number">03</span>
+            <span class="album-symbol">✷</span>
+            <h3>The Showcase<br>Era</h3>
+            <p>Projects · Work Samples</p>
+          </div>
+          <div class="album-footer">
+            <span>THE SHOWCASE ERA</span>
+            <span>OPEN ↗</span>
+          </div>
+        </a>
       </div>
     </section>
 
+    <!-- CAREER ERA -->
+    <section class="content-section career-section" id="career">
+      <div class="section-heading left">
+        <p class="eyebrow">01 / THE CAREER ERA</p>
+        <h2>Experience & Activities</h2>
+        <p>Professional experience and organizational contributions, arranged from newest to oldest.</p>
+      </div>
+
+      <div class="experience-list">
+        <article class="experience-item">
+          <span class="track-number">01</span>
+          <div>
+            <h3>Archivist Intern</h3>
+            <p class="organization">Barenbang · Ministry of Manpower of the Republic of Indonesia</p>
+            <p class="date">November 24, 2025 — May 23, 2026</p>
+
+            <p class="detail-label">Responsibilities & Contributions</p>
+            <ul>
+              <li>Managed 2,500+ active archives using the SRIKANDI application.</li>
+              <li>Maintained inactive archives from 2006–2022 using Google Sheets.</li>
+              <li>Classified incoming and outgoing correspondence according to archival classification guidelines.</li>
+              <li>Listed, classified, and boxed inactive records from 2018–2022 for transfer to the Record Center.</li>
+              <li>Cross-checked 93 boxes of inactive financial records from 2006–2019 to verify accuracy and completeness.</li>
+              <li>Participated in records disposal meetings and applied records classification, JRA, verification, storage, and Record Center practices.</li>
+              <li>Completed the internship with a Very Good (Sangat Baik) evaluation.</li>
+            </ul>
+
+            <p class="detail-label">Tools & Knowledge</p>
+            <div class="skill-tags">
+              <span>SRIKANDI</span>
+              <span>Google Sheets</span>
+              <span>JRA</span>
+              <span>Records Classification</span>
+              <span>Record Center</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="experience-item">
+          <span class="track-number">02</span>
+          <div>
+            <h3>Administrative Assistant (Freelance)</h3>
+            <p class="organization">CV Petra Jaya Mandiri</p>
+            <p class="date">June 2024 — Present</p>
+
+            <p class="detail-label">Responsibilities</p>
+            <ul>
+              <li>Prepared administrative letters for permit, verification, and inspection requests.</li>
+              <li>Completed online administrative forms and entered required information for forwarding processes.</li>
+              <li>Ensured information and supporting documents were accurate and complete before submission.</li>
+              <li>Supported administrative documentation and business record maintenance.</li>
+            </ul>
+
+            <p class="detail-label">Relevant Skills</p>
+            <div class="skill-tags">
+              <span>Administrative Support</span>
+              <span>Document Verification</span>
+              <span>Data Entry</span>
+              <span>Documentation</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="experience-item">
+          <span class="track-number">03</span>
+          <div>
+            <h3>Librarian Intern</h3>
+            <p class="organization">UPT Library · Universitas Negeri Surabaya (UNESA)</p>
+            <p class="date">January 15 — February 13, 2024</p>
+
+            <p class="detail-label">Responsibilities & Contributions</p>
+            <ul>
+              <li>Assisted students with borrowing and circulation services.</li>
+              <li>Organized library collections according to classification for proper shelving and accessibility.</li>
+              <li>Managed the weeding of 300+ theses as part of collection maintenance and evaluation.</li>
+              <li>Processed 150+ donated books, including data entry, classification, and labeling.</li>
+              <li>Supported library administration and collection management.</li>
+            </ul>
+
+            <p class="detail-label">Tools & Knowledge</p>
+            <div class="skill-tags">
+              <span>Classification</span>
+              <span>Cataloging</span>
+              <span>Collection Management</span>
+              <span>Library Services</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="experience-item">
+          <span class="track-number">04</span>
+          <div>
+            <h3>Division Secretary · FORTE Orientation 2022</h3>
+            <p class="organization">Universitas Airlangga</p>
+            <p class="date">May — September 2022</p>
+
+            <p class="detail-label">Responsibilities & Contributions</p>
+            <ul>
+              <li>Managed organizational documentation and administrative records.</li>
+              <li>Prepared meeting records and supported coordination among team members.</li>
+              <li>Assisted with event administration and activity reporting.</li>
+              <li>Supported correspondence, licensing, and promotional activities for event fundraising.</li>
+            </ul>
+
+            <p class="detail-label">Relevant Skills</p>
+            <div class="skill-tags">
+              <span>Secretarial Support</span>
+              <span>Correspondence</span>
+              <span>Coordination</span>
+              <span>Event Administration</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- EDUCATION -->
+      <div class="education-box">
+        <p class="eyebrow">EDUCATION</p>
+        <h3>Bachelor of Library and Information Science</h3>
+        <p>Universitas Airlangga · September 2021 — August 2025 · GPA 3.42/4.00</p>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="skills-section">
+        <p class="eyebrow">SKILLS & TOOLS</p>
+        <div class="skill-tags">
+          <span>Records Management</span>
+          <span>Digital Filing</span>
+          <span>SRIKANDI</span>
+          <span>Google Sheets</span>
+          <span>Microsoft Excel</span>
+          <span>SLiMS</span>
+          <span>Classification</span>
+          <span>Cataloging</span>
+          <span>Data Entry</span>
+          <span>Documentation</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDENTIALS -->
+    <section class="content-section certificate-section" id="certificates">
+      <div class="section-heading left">
+        <p class="eyebrow">02 / THE CERTIFIED ERA</p>
+        <h2>Credentials & Learning</h2>
+        <p>Professional certifications, training, and learning milestones, arranged from newest to oldest.</p>
+      </div>
+
+      <div class="certificate-grid">
+        <article class="certificate-card">
+          <span class="certificate-number">01</span>
+          <p class="eyebrow">REVOU</p>
+          <h3>Intro to Data Analytics</h3>
+          <p class="organization">RevoU · One-week Mini Course</p>
+          <small>October 16, 2026</small>
+
+          <p class="detail-label">Program Details</p>
+          <ul>
+            <li>Completed a one-week certified online course.</li>
+            <li>Covered data analytics fundamentals, data quality and bias, AI-assisted analysis, data storytelling, and dashboard design.</li>
+          </ul>
+        </article>
+
+        <article class="certificate-card">
+          <span class="certificate-number">02</span>
+          <p class="eyebrow">PERPUSNAS RI</p>
+          <h3>Introduction to Library Management Training</h3>
+          <p class="organization">National Library of Indonesia</p>
+          <small>September 19, 2026 · 32 training hours</small>
+
+          <p class="detail-label">Training Topics</p>
+          <ul>
+            <li>Introduction to library science.</li>
+            <li>Collection development, cataloging, classification, and subject headings.</li>
+            <li>Library services and preservation of library materials.</li>
+            <li>Introduction to library automation and evaluation.</li>
+          </ul>
+        </article>
+
+        <article class="certificate-card">
+          <span class="certificate-number">03</span>
+          <p class="eyebrow">BNSP</p>
+          <h3>Digital Filing — Certificate of Competence</h3>
+          <p class="organization">BNSP · Archives Competency Certification</p>
+          <small>2026 · Valid for 3 years</small>
+
+          <p class="detail-label">Competency Areas</p>
+          <ul>
+            <li>Digital archive management and computer-based filing.</li>
+            <li>Records authentication, storage, inventory, and maintenance.</li>
+            <li>Application-based records management and online services.</li>
+            <li>Records disposition and archival administration.</li>
+          </ul>
+        </article>
+
+        <article class="certificate-card">
+          <span class="certificate-number">04</span>
+          <p class="eyebrow">PERPUSNAS RI</p>
+          <h3>Special Library Services Training</h3>
+          <p class="organization">National Library of Indonesia</p>
+          <small>June 10, 2026 · 50 training hours</small>
+
+          <p class="detail-label">Training Topics</p>
+          <ul>
+            <li>Library service policies, introduction to services, and service excellence.</li>
+            <li>Social inclusion-based library services and interpersonal communication.</li>
+            <li>Service promotion, reference services, and information literacy.</li>
+            <li>Information repackaging, service collaboration, and user satisfaction surveys.</li>
+          </ul>
+        </article>
+
+        <article class="certificate-card">
+          <span class="certificate-number">05</span>
+          <p class="eyebrow">GLOBAL ENGLISH</p>
+          <h3>Global English Proficiency Test</h3>
+          <p class="organization">Global English</p>
+          <small>2025</small>
+
+          <p class="detail-label">Test Results</p>
+          <ul>
+            <li>Listening: 9</li>
+            <li>Reading: 7</li>
+            <li>Writing: 6.5</li>
+            <li>Pre-Writing: 7</li>
+            <li>Speaking: 6 and 5.5</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- SHOWCASE ERA -->
+    <section class="content-section portfolio-section" id="portfolio">
+      <div class="section-heading left">
+        <p class="eyebrow">03 / THE SHOWCASE ERA</p>
+        <h2>Selected Projects & Work</h2>
+        <p>
+          Practical work and projects from my professional
+          and learning journey.
+        </p>
+      </div>
+
+      <div class="project-grid">
+        <!-- PROJECT 1 -->
+        <article class="project-card">
+          <div class="project-art archive-art">✧</div>
+
+          <div class="project-content">
+            <p class="eyebrow">PROFESSIONAL EXPERIENCE</p>
+            <h3>Records Management · Barenbang</h3>
+            <p>
+              Digital filing, records classification, retention management,
+              and archive audit support.
+            </p>
+
+            <div class="skill-tags">
+              <span>SRIKANDI</span>
+              <span>Google Sheets</span>
+              <span>JRA</span>
+            </div>
+
+            <div class="card-pdf-upload">
+              <label for="project-pdf-1">＋ Add Project PDF</label>
+              <input
+                id="project-pdf-1"
+                type="file"
+                accept="application/pdf,.pdf"
+                data-pdf-target="project-preview-1"
+              >
+              <div id="project-preview-1" class="card-pdf-preview"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 2 -->
+        <article class="project-card">
+          <div class="project-art library-art">▤</div>
+
+          <div class="project-content">
+            <p class="eyebrow">LIBRARY INTERNSHIP</p>
+            <h3>Library Collection Processing · UNESA</h3>
+            <p>
+              Collection processing, classification, weeding,
+              and circulation support.
+            </p>
+
+            <div class="skill-tags">
+              <span>DDC</span>
+              <span>SLiMS</span>
+              <span>Cataloging</span>
+            </div>
+
+            <div class="card-pdf-upload">
+              <label for="project-pdf-2">＋ Add Project PDF</label>
+              <input
+                id="project-pdf-2"
+                type="file"
+                accept="application/pdf,.pdf"
+                data-pdf-target="project-preview-2"
+              >
+              <div id="project-preview-2" class="card-pdf-preview"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+      <p class="eyebrow">A LITTLE ABOUT ME</p>
+      <h2>
+        Organizing Information.<br>
+        <em>Supporting Better Systems.</em>
+      </h2>
+
+      <p>
+        I'm a Library and Information Science graduate from Universitas
+        Airlangga with practical experience in records management,
+        digital filing, library services, and administrative support.
+        I enjoy making information organized, accessible, and useful.
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <p class="eyebrow">THE NEXT ERA</p>
+      <h2>Let's Connect</h2>
+
+      <p>
+        Interested in opportunities in archival and records management,
+        digital filing, information management, and administrative support.
+      </p>
+
+      <div class="contact-buttons">
+        <a href="mailto:your-email@example.com">Email Me ↗</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">
+          LinkedIn ↗
+        </a>
+      </div>
+    </section>
   </main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="site-footer">
-    <p>Made with 💖 · My Archive Buddy · Data stored in your browser's localStorage</p>
+  <!-- FOOTER -->
+  <footer>
+    <span>ADN'S</span>
+    <span>Professional Portfolio · 2026</span>
   </footer>
-
-  <!-- Delete confirmation dialog -->
-  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="dialog-title">
-    <div class="dialog-inner">
-      <span class="dialog-icon">🗑️</span>
-      <h3 id="dialog-title">Delete Archive?</h3>
-      <p id="dialog-message">Are you sure you want to delete this record? This cannot be undone.</p>
-      <div class="dialog-actions">
-        <button id="dialog-confirm" class="btn btn-danger">Yes, Delete</button>
-        <button id="dialog-cancel" class="btn btn-secondary">Cancel</button>
-      </div>
-    </div>
-  </dialog>
 
   <script src="script.js"></script>
 </body>
