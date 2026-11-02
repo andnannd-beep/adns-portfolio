@@ -20,7 +20,7 @@ Library and Information Science graduate from Universitas Airlangga with experie
 
 ## Website
 
-Visit the portfolio: https://andannnd-beep.github.io/my-archive-buddy/
+Visit the portfolio: https://andnannd-beep.github.io/adns-portfolio/
 
 ---
 
