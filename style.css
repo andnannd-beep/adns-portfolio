@@ -647,7 +647,8 @@ footer {
     transition: none;
   }
 }
-/* Saved PDF preview */
+
+/* SAVED PDF PREVIEW */
 .card-pdf-preview {
   display: flex;
   align-items: center;

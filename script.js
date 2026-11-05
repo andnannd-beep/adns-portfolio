@@ -39,10 +39,10 @@ async function savePDF(id, file) {
     const store = transaction.objectStore(STORE_NAME);
 
     store.put({
-      id: id,
+      id,
       name: file.name,
       type: file.type || "application/pdf",
-      file: file,
+      file,
       savedAt: new Date().toISOString()
     });
 
@@ -52,6 +52,11 @@ async function savePDF(id, file) {
     };
 
     transaction.onerror = () => {
+      db.close();
+      reject(transaction.error);
+    };
+
+    transaction.onabort = () => {
       db.close();
       reject(transaction.error);
     };
@@ -98,10 +103,15 @@ async function deletePDF(id) {
       db.close();
       reject(transaction.error);
     };
+
+    transaction.onabort = () => {
+      db.close();
+      reject(transaction.error);
+    };
   });
 }
 
-// Display PDF preview
+// Display saved PDF preview/link
 function showPDFPreview(container, pdfData, id) {
   container.innerHTML = "";
 
@@ -126,15 +136,22 @@ function showPDFPreview(container, pdfData, id) {
 
     if (!confirmed) return;
 
-    await deletePDF(id);
-    container.innerHTML = "";
+    try {
+      await deletePDF(id);
+      container.innerHTML = "";
 
-    const input = document.querySelector(
-      `[data-pdf-target="${id}"]`
-    );
+      const input = document.querySelector(
+        `[data-pdf-target="${id}"]`
+      );
 
-    if (input) {
-      input.value = "";
+      if (input) {
+        input.value = "";
+      }
+
+      URL.revokeObjectURL(fileURL);
+    } catch (error) {
+      console.error("Could not delete PDF:", error);
+      alert("The PDF could not be removed. Please try again.");
     }
   });
 
@@ -180,8 +197,10 @@ function setupPDFUploads() {
 
       if (!file || !container) return;
 
-      if (file.type !== "application/pdf" &&
-          !file.name.toLowerCase().endsWith(".pdf")) {
+      if (
+        file.type !== "application/pdf" &&
+        !file.name.toLowerCase().endsWith(".pdf")
+      ) {
         alert("Please select a PDF file.");
         this.value = "";
         return;
